@@ -1,12 +1,25 @@
 <header>
     <img src="/static/images/icon.png" alt="icon" class="icon">
-    <h1>Christmas Tickets</h1>
+    <h1><a href="/">Christmas Tickets</a></h1>
 
 </header>
 <nav>
     <a href="/dashboard">Dashboard</a>
     <a href="/create_ticket">Create Ticket</a>
     <a href="/view_tickets">View Tickets</a>
-    <a href="/edit_ticket">Edit Ticket</a>
+    <a href="/edit">Edit Ticket</a>
     <a href="/logout">Logout</a>
 </nav>
+{% if g.username %}
+<p>Welcome, {{ g.username }}!</p>
+{% endif %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li style="color: red;">{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
