@@ -11,7 +11,7 @@
     <a href="/logout">Logout</a>
 </nav>
 {% if g.username %}
-<p>Welcome, {{ g.username }}!</p>
+<p>Bonjour, {{ g.username }}!</p>
 {% endif %}
 
 {% with messages = get_flashed_messages() %}

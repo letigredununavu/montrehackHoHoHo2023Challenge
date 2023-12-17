@@ -138,6 +138,7 @@ def create_ticket():
 # route for view tickets
 @app.route('/view_tickets', methods=['GET', 'POST'])
 def view_tickets():
+    
     # First verify that the user is logged-in
     if not session.get("user_id"):
         return redirect(url_for("login"))
@@ -152,6 +153,7 @@ def view_tickets():
 # route for edit ticket
 @app.route('/edit', methods=['GET'])
 def edit():
+    
     # is the user logged-in 
     if not session.get("user_id"):
         return redirect(url_for("login"))
@@ -166,15 +168,18 @@ def edit():
 # route for edit ticket
 @app.route('/edit_ticket/<ticket_id>', methods=['GET', 'POST'])
 def edit_ticket(ticket_id):
+    
     # is the user logged-in 
     if not session.get("user_id"):
         return redirect(url_for("login"))
 
     # get the ticket from the database
     ticket = Ticket.query.filter_by(id=ticket_id).first()
+    
     if not ticket:
         flash("Ce ticket n'existe pas.", 'error')
         return redirect('/edit')
+    
     # if method is get, return edit page
     if request.method == "GET":
         return render_template('edit_ticket.html', ticket=ticket)
@@ -182,7 +187,7 @@ def edit_ticket(ticket_id):
     if request.method == "POST":
         if session["user_id"] != ticket.user_id:
                 flash("Vous n'êtes pas autorisé à effectuer cette action, vous n'êtes pas le propriétaire du ticket.", 'error')
-                return redirect('/edit_ticket/{}'.format(ticket_id ))  # Redirigez l'utilisateur vers une autre route ou page
+                return redirect('/edit_ticket/{}'.format(ticket_id ))
         
         # modify the ticket with the new form
         ticket.title = request.form["title"]
@@ -382,7 +387,7 @@ def fillDatabase():
     tickets.append(Ticket(user_id=tac_id, title=title, description=description, priority=priority))
 
     title = "Tester la fonctionnalité de paiement mobile pour les commandes de noel"
-    description = "Vérifier que le système de paiement mobile fonctionne correctement pour les commandes de noel"
+    description = "Vérifier que le système de paiement mobile fonctionne correctement pour les commandes de noel."
     priority = "medium"
     tickets.append(Ticket(user_id=tac_id, title=title, description=description, priority=priority))
 
